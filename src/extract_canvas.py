@@ -34,8 +34,12 @@ def catch_assignment():
             quiz_id = result_assignment[0].get('quiz_id')
         else:
             print(f'{response.status_code}: {response.text}')
+    except IndexError:
+        print(f'Nenhuma atividade encontrada. \nVerifique o mês e ano informado.')
+        return
     except Exception as e:
         print(f'Ocorreu um erro ao capturar assignment: {e}')
+        return
     return quiz_id
 
 def catch_link_report():
@@ -60,13 +64,16 @@ def catch_link_report():
         print(f'Ocorreu um erro ao realizar o download: {e}')
     return report_name, report_link
 
-def download_save(report_name, report_link):
-    safe_name = re.sub(r'[<>:"/\\|?*]', '-', report_name)
+def download_save(report_name, report_link):  
+    safe_name = re.sub(r'[<>:"/\\|?*]', '-', report_name).strip()
+    file_path = f'{path_download}/{safe_name}'
+    if os.path.exists(file_path):
+        print(f'Arquivo já existente. \nVerifique em: {file_path} .')
+        return
     response = requests.get(report_link,
                             headers=headers,
                             verify=cert)
     if response.status_code == 200:
-        file_path = f'{path_download}/{safe_name}'
         with open(file_path, "wb") as file:    
             file.write(response.content)
         print(f'Arquivo salvo em: {file_path}')
@@ -76,4 +83,7 @@ def download_save(report_name, report_link):
 #Teste
 
 report_name, report_link = catch_link_report()
-download_save(report_name, report_link)
+if report_name and report_link:
+    download_save(report_name, report_link)
+else:
+    print('Não foi possível gerar o relatório.')
