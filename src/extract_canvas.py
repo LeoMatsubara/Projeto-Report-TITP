@@ -22,7 +22,8 @@ mes = input('Qual o mês do report? ').strip().capitalize()
 # utilizar API para descobrir o quizzes correto com base no nome da assignment
 def catch_assignment():
     search_conc = f'{mes} {ano}'
-    params = {'search_term': search_conc} 
+    params = {'search_term': search_conc}
+    quiz_id = None
     try:
         url = f'{CANVAS_API_URL}/api/v1/courses/{course_id}/assignments'
         response = requests.get(headers=headers,
@@ -44,6 +45,9 @@ def catch_assignment():
 
 def catch_link_report():
     quiz_id = catch_assignment()
+    if not quiz_id:
+        print('Quiz ID inválido ou não encontrado.')
+        return None, None
     params = {'quiz_report[report_type]':'student_analysis','include':'file'}
     print('\nRelatório em processamento...\n')
     try:
@@ -52,6 +56,7 @@ def catch_link_report():
                                 url=url,
                                 verify=cert,
                                 params=params)
+        #Implementar um while para verificar status e 
         if response.status_code == 200:
             result = response.json()
             report_name = result['file']['display_name']
@@ -61,7 +66,7 @@ def catch_link_report():
             print(f'{response.status_code}: {response.text}')
             return None, None
     except Exception as e:
-        print(f'Ocorreu um erro ao realizar o download: {e}')
+        print(f'Ocorreu um erro ao solicitar o relatório: {e}')
     return report_name, report_link
 
 def download_save(report_name, report_link):  
