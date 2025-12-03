@@ -95,6 +95,7 @@ def download_save(report_name, report_link, headers, cert, path_download):
             with open(file_path, "wb") as file:
                 file.write(response.content)
             logging.info(f'Arquivo salvo em: {file_path}')
+            return safe_name
         else:
             logging.error(f'{response.status_code}: {response.text}')
     except Exception as e:
