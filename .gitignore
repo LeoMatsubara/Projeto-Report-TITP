@@ -2,3 +2,4 @@ canvas_tkn.env
 data
 *.docx
 __pycache__
+*.svg

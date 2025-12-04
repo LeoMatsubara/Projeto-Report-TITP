@@ -76,7 +76,7 @@ def main():
     else:
         logging.error('Não foi possível gerar o relatório.')
 
-    # Busca arquivo de download para tratamento dos dados
+    # Busca arquivo de download para tratamento dos dados e armazenamento local
     df_clean = transformer.load_clean_report(
         data_path=f'{path_download}/{safe_name}')
     

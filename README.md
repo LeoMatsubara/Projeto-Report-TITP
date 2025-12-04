@@ -30,7 +30,7 @@ Atualmente, os relatórios TI/TP são elaborados manualmente, o que torna o proc
 
 1. Extrair respostas do questionário do Canvas (CSV ou JSON) via API.
 2. Tratar e agregar os dados (por pergunta, percentuais, média, etc).
-3. Renderizar um PDF estilizado (semelhante ao da CPA) — um por docente ou consolidado.
+3. Renderizar um PDF estilizado — um por docente e/ou consolidado.
 4. Salvar localmente e disponibilizar (upload via Canvas API ou envio por e-mail).
 5. Executar automaticamente (em lote), com logs, retries e monitoramento.
 
@@ -45,40 +45,26 @@ Atualmente, os relatórios TI/TP são elaborados manualmente, o que torna o proc
 ## 🧰 Tecnologias
 
 ### Linguagem
-- Python 3.10+
+- Python 3.13+
 
 ### Bibliotecas
 - requests
 - canvasapi (opcional)
 - pandas
-- numpy
-- Jinja2
-- WeasyPrint ou pdfkit/wkhtmltopdf ou ReportLab
-- matplotlib
-- openpyxl
-- pytest
-- loguru ou structlog / logging
-- python-dotenv / dynaconf
-- boto3 (se usar S3)
-- sendgrid (se enviar por API)
+- ReportLab
+- logging
+- python-dotenv
 - docker
-
-### Infraestrutura / Serviços
-- Servidor Linux com Docker ou AWS/GCP/Azure
-- PostgreSQL (opcional) para histórico de execuções e metadados
-- Redis + Celery (para processamento assíncrono em larga escala)
-- GitHub/GitLab + CI (GitHub Actions)
 
 ---
 
 ## 🧱 Arquitetura e Fluxo
 
-🔹 **Scheduler**: cron / GitHub Actions / Airflow  
 🔹 **Extractor**: Canvas API → CSV/JSON → `/data/raw`  
 🔹 **Transformer**: pandas → DataFrame normalizado  
 🔹 **Renderer**: Jinja2 + gráficos → PDF  
 🔹 **Uploader**: Canvas Files API ou e-mail  
-🔹 **Recorder**: grava status em banco/log  
+🔹 **Recorder**: grava status em banco/log
 🔹 **Alert**: notificação via Slack/e-mail em caso de erro
 
 ---
