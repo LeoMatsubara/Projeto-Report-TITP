@@ -3,3 +3,4 @@ data
 *.docx
 __pycache__
 *.svg
+*.pdf

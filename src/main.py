@@ -86,6 +86,44 @@ def main():
             path_data_p=path_data_ps,
             name_data_p=safe_name
         )
+    
+    from render_pdf import build_overlay_one_row, build_overlays_all_rows,merge_all_overlays_with_template
+
+    fonts_dir  = CURRENT_DIR.parent / 'fonts'
+    output_dir = CURRENT_DIR.parent / 'data' / 'processed' / 'overlay'
+    csv_path   = path_data_ps / safe_name
+    template_pdf = CURRENT_DIR.parent / 'template' / 'Template_Clean.pdf'
+    overlays_dir = CURRENT_DIR.parent / 'data' / 'processed' / 'overlay'
+    final_dir    = CURRENT_DIR.parent / 'data' / 'processed' / 'final'
+
+    mes = ""
+    ano = ""
+
+    #build_overlay_one_row(
+    #    csv_path=csv_path, 
+    #    fonts_dir=fonts_dir, 
+    #    output_dir=output_dir, 
+    #    show_boundary=False,
+    #    safe_name=safe_name
+    #    #mes=mes,
+    #    #ano=ano
+    #)
+    
+    build_overlays_all_rows(
+        csv_path=csv_path,
+        fonts_dir=fonts_dir,
+        output_dir=output_dir,
+        show_boundary=False,
+        safe_name=safe_name
+    )
+
+    merge_all_overlays_with_template(
+        template_pdf=template_pdf,
+        overlays_dir=overlays_dir,
+        output_dir=final_dir,
+        #mes=mes,
+        #ano=ano
+    )
 
 
 if __name__ == '__main__':

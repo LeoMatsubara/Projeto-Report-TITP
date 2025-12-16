@@ -11,7 +11,7 @@ def load_clean_report(data_path):
         logging.info(f'Arquivo carregado com {len(df)} linhas e {len(df.columns)} colunas.')
 
         logging.info('Transformação dos dados em processamento...')
-        df.columns = [col.strip().lower() for col in df.columns]
+        df.columns = [col.strip() for col in df.columns]
         df.fillna('',inplace=True)
         cols_to_change = range(3,18)
         new_names = {df.columns[i]: df.columns[i][9:].strip() for i in cols_to_change}
