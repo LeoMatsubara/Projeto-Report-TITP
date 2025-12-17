@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 def load_clean_report(data_path):
     try:
-        df = pd.read_csv(data_path, usecols=[0,2,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35])
+        df = pd.read_csv(data_path, usecols=[0,2,6,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35],dtype={'sis_id': str})
         logging.info(f'Arquivo carregado com {len(df)} linhas e {len(df.columns)} colunas.')
 
         logging.info('Transformação dos dados em processamento...')
