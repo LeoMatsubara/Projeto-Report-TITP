@@ -13,7 +13,7 @@ Os relatórios eram produzidos manualmente, consumindo tempo e aumentando a chan
 
 ## 👥 Stakeholders
 
-- Reitoria, Coordenações, Docentes, Secretaria Acadêmica
+- Reitoria, Coordenação, Docentes, Secretaria Acadêmica
 
 ---
 
@@ -29,7 +29,7 @@ Arquivos de orquestração, transformação e renderização foram testados com 
 Para **cada docente** (uma linha por docente no CSV tratado):
 
 1. **Extrair** respostas do questionário do Canvas via API (gera link de report e download). 
-2. **Tratar** CSV → normalizar colunas, datas e nomes, salvar como `;`-separado.
+2. **Tratar** CSV → normalizar colunas, datas e nomes.
 3. **Renderizar** overlay PDF em A4 com duas colunas, altura sob demanda para Q10, sem sobreposição.
 4. **Mesclar** overlay com **template PDF** (background) na 1ª página e salvar em `final/`.
 5. **Executar** em lote e monitorar via logs; preparar distribuição (Canvas Files API/e-mail).
@@ -41,7 +41,7 @@ Para **cada docente** (uma linha por docente no CSV tratado):
 - **Python 3.13+**  
 - **requests**, **certifi**, **python-dotenv** (Canvas / SSL / env)
 - **pandas** (ETL CSV)
-- **ReportLab** (overlay PDF, milímetros, tipografia)  
+- **ReportLab** (overlay PDF, map, tipografia)  
 - **PyPDF2** (merge overlay + template)
 - **logging**
 
@@ -62,7 +62,7 @@ Para **cada docente** (uma linha por docente no CSV tratado):
   - Mescla **em lote** os overlays com o template, salvando localmente o arquivo ".PDF" renderizado.
 
 - **Template A4**  
-  - Estrutura com cabeçalho, bloco do docente, cabeçalhos “Questões/Respostas” e rodapé/assinatura. Testado com merge de overlays.
+  - Estrutura com cabeçalho, bloco do docente, cabeçalhos “Questões/Respostas” e rodapé/assinatura.
 ---
 
 ## 📂 Estrutura de Pastas (armazenamento)
@@ -74,7 +74,7 @@ Para **cada docente** (uma linha por docente no CSV tratado):
 
 ## 🔐 Configuração
 
-1. Crie `.env` na raiz com:
+1. Crie `.env` na raiz com o token.
 2. Confirme o `course_id` e a URL Canvas no `main.py`.
 3. Instale as fontes em `/fonts` (OpenSans Condensed) — usadas no overlay.
 
@@ -84,7 +84,7 @@ Para **cada docente** (uma linha por docente no CSV tratado):
   `python src/main.py`
 2. Informe o ano do report quando solicitado.
 3. Selecione a assignment listado.
-4. O sistema vai pedir ao Canvas para gerar o report, baixar o arquivo, tratar o CSV, gerar um overlay e por fim mesclar overlays com o template e salvar em data/processed/final.
+4. O sistema vai pedir ao Canvas para gerar o report, baixar o arquivo, tratar o CSV, gerar um overlay e por fim mesclar overlays com o template e salvar em `data/processed/final`.
 
 ## 📝 Logs & Monitoramento
 
